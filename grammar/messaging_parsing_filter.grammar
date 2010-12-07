@@ -1,0 +1,42 @@
+transition_table = {
+    :start => { /\d{4}-\d{2}-\d{2}/ => :date },
+    :date  => { /\d{2}:\d{2}:\d{2},\d{3}/ => :time },
+    :time  => { /INFO/ => :info },
+    :info  => { 
+                /\[SmsClient\]/ => :classname,
+                /\[SmsClient\]/ => :classname,
+                /\[SmsClient\]/ => :classname,
+                /\[ContinueSendMessage\]/ => :classname
+              },
+    :classname  => { 
+                    /pool-\d+-thread-\d+:/ => :poolthread,
+                    /http-\d.\d.\d.\d-\d+-\d+:/ => :poolthread,
+                    /\[(\w|\.|\-)+@(\w|\-)+\.\w+\]/ => :user_id,
+                    /\[\]/ => :user_id
+                   },
+    :user_id   => { 
+                    /\[\d+((-\d+){3})?\]/ => :txn_id,
+                    /\[(\d|\w)+((-(\d|\w)+){4})?\]/ => :txn_id,
+                    /\[\]/ => :txn_id
+                  },
+    :txn_id    => {
+                    /\[sip:location2sandbox@sb-domain.com\]/ => :app_uuid,
+                    /\[(urn:uuid:)?.{8}-.{4}-.{4}-.{4}-.{12}\]/ => :app_uuid,
+                    /\[\]/ => :app_uuid,
+                    /\[sip:location@sb-domain.com\]/ => :app_uuid,
+                    /\[\w+\]/ => :app_uuid
+                  },
+    :app_uuid  => { /\-/ => :hyphen },
+    :hyphen    => {
+                    /pool-\d+-thread-\d+:/ => :poolthread,
+                    /http-\d.\d.\d.\d-\d+-\d+:/ => :poolthread,
+                    /continueSendMessage\(.+/ => :end
+                  },
+    :poolthread  => { /START/ => :startstring },
+    :startstring  => { /OUTBOUND:/ => :outbound },
+    :outbound => { 
+                    /SmsClient.sendToPlatform\(.+/ => :end,
+                    /SmsClient.sendToPlatform\(.+/ => :end
+                 },
+    :end            => { }
+}

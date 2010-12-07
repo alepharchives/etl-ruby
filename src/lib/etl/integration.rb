@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'etl/integration/data_adapter'
+require 'etl/integration/io/file_watcher'
+require 'etl/integration/sql/extension'
+require 'etl/integration/sql/exception'
+require 'etl/integration/sql/type_oids'
+require 'etl/integration/sql/error_handler_mixin'
+require 'etl/integration/sql/postgres'
+require 'etl/integration/sql/database'
+require 'etl/integration/sql/resultset'
+require 'etl/integration/sql/command'
+require 'etl/integration/sql/sql_bulk_loader'
+require 'etl/integration/extraction/sql_extractor'
+require 'etl/integration/extraction/ldap_extractor'
+require 'etl/integration/extraction/ldif_extractor'
+require 'etl/integration/extraction/sql_driver'

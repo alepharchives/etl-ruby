@@ -1,0 +1,17 @@
+transition_table = {
+    :start => { /\d{4}-\d{2}-\d{2}/ => :date },
+    :date  => { /\d{2}:\d{2}:\d{2},\d{3}/ => :time },
+    :time  => { /INFO/ => :info },
+    :info  => { 
+                /\[CallEventListener\]/ => :empty_a,
+                /\[MediaEventListener\]/ => :empty_a
+              },
+    :empty_a => { /\[\]/ => :empty_b },
+    :empty_b => { /\[\]/ => :empty_c },
+    :empty_c => { /\[\]/ => :release3PC },
+    :release3PC => { /\[Release(3|4)ThirdPartyCall\]/ => :call_id },
+    :call_id => { /\[call:\w{32}\]/ => :hypen },
+    :hypen => { /\-/ => :mis_data },
+    :mis_data => { /\[CALL MIS DATA: Call Start Time=\((?:\w{3} \w{3} \d{2} \d{2}:\d{2}:\d{2} \w{3} \d{4})?\), Call Duration=\((?:\d{1,4})?\)\, Call Termination Cause=\((?:\w*)?\)\, Caller Telno=\((?:[\w,:,@,\.,\-,_,+]*)?(;(.)*)*\)\, Callee Telno=\((?:[\w,:,@,\.,\-,_,+]*)?\)\, (Connected=\((false|true)\)\, )?Application Id=\((urn:uuid:.{8}-.{4}-.{4}-.{4}-.{12}|null)?\)\]/ => :end },
+    :end            => { }
+}

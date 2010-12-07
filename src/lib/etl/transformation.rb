@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require 'etl/transformation/exception'
+require 'etl/transformation/pipeline/filters/exception'
+require 'etl/transformation/object2csv'
+require 'etl/transformation/object2excel'
+require 'etl/transformation/state_token_transformer'
+require 'etl/transformation/state_token_transformer_factory'
+require 'etl/transformation/pipeline/filter_chain'
+require 'etl/transformation/pipeline/filters/parsing_filter'
+require 'etl/transformation/pipeline/filters/entry_filter'
+require 'etl/transformation/pipeline/filters/transformation_filter'
+require 'etl/transformation/pipeline/filters/dump_file_output_filter'
+require 'etl/transformation/pipeline/filters/decorator_filter'
+require 'etl/transformation/pipeline/file_filter_chain_transformation'

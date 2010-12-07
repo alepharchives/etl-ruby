@@ -1,0 +1,337 @@
+# regexes
+dateRx = "\\d{4}-\\d{2}-\\d{2}"
+timeRx = "\\d{2}:\\d{2}:\\d{2},\\d{3}"
+timeToComplRx = "(\\d+\\.\\d)"
+transIdRx = "(\\d{1,5}-\\d{1,5}-\\d{1,5}-\\d{1,5}|fitnesse.transaction.id.def|\\d{13}|ID:JBM-\\d{10})?"
+userNameRx = "(sip:)?\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
+appUuidRx = "((urn:uuid:)?.{8}-.{4}-.{4}-.{4}-.{12}|App|Manual Testapp|Bad Testapp|FITNESSE-CLIENT|sip:location2sandbox@sb-domain.com|sip:location2production@sb-domain.com|sip:location@sb-domain.com|http://sdk.sb-domain.com/2006/09/Location)";
+httpRx = "http\\-0\\.0\\.0\\.0\\-\\d{5}\\-\\d{1,2}:";
+
+confPackageRx = "(sdk\\.(_2006\\._07|_2007\\._01)\\.session\\.conferencing\\.)?"
+confClassRx = confPackageRx + "SessionConferencingInterface"
+confMethodRx = "(inviteParticipant|" +
+    "disconnectParticipant|" +
+    "endConference|" +
+    "createConference|" +
+    "getConferenceInfo|" +
+    "getParticipantInfo|" +
+    "getParticipants)"
+releaseRx = "(Release\\dConferencing)"
+confIdRx = "((conf:){0,2}.{31,32}|Foo|[\\w-]+|tel:[\\+\\d]+)?"
+partIdRx = "((part:|conf:).{32}|Foo|tel:\\d+)"
+confRelClassRx = "(capabilities\\.conferencing(\\.(r\\d)?proxy)?\\.generated.)?SessionConferencingInterface"
+
+tpcClassRx = "(sdk\\.(_2006\\._07|_2007\\._01)\\.session\\.thirdpartycall\\.)?SessionThirdPartyCallInterface"
+tpcMethodRx = "(makeCall|" +
+              "endCall|" +
+              "getCallInformation|" +
+              "cancelCallRequest)"
+tpcRelease3ClassRx = "(capabilities\\.thirdparty(\\.proxy)?\\.generated\\.|" +
+                     "capabilities\\.thirdparty\\.r(2|3)proxy\\.generated\\.)?SessionThirdPartyCallInterface"
+tpcReleaseRx = "(Release\\dThirdPartyCall)"
+
+messPackageRx = "(sdk\\._2006\\._07\\.session\\.messaging\\.)?SessionMessagingInterface"
+messMethodRx = "(getReceivedMessages|sendMessage|clearReceivedMessages|getMessageDeliveryStatuses)"
+
+messOneClassRx = "((sdk\\._2007\\._(04|07)\\.messaging\\.oneway\\.)?MessagingOneWayInterface|" +
+                 "(sdk\\._2007\\._01\\.sms\\.onewaysms\\.)?SMSOneWaySMSInterface)";
+messOneMethodRx = "(sendMessage|"+
+                  "getMessageDeliveryStatuses|" +
+                  "sendMessageWithEventing)"
+
+messInbClassRx = "((sdk\\._2007\\._(04|07)\\.messaging\\.inbound\\.)?MessagingInboundInterface|"+
+               "(sdk\\._2007\\._01\\.sms\\.inboundsms\\.)?SMSInboundSMSInterface)"
+messInbMethodRx = "(getReceivedMessages|"+
+                   "sendMessage|" + 
+                   "clearReceivedMessages|" + 
+                   "getMessageDeliveryStatuses|" +
+                   "sendMessageWithEventing)"
+
+messIntClassRx = "(capabilities\\.messaging\\.internal\\.)?InternalMessageClient"
+messIntMethodRx = "sendInternalMessage"
+
+messInt2ClassRx = "(sdk\\._2007\\._04\\.messaging\\.internal\\.)?MessagingInternalInterface"
+messInt2MethodRx = "(sendMessage|" +
+                   "getReceivedMessages)"
+
+smsClassRx = "(capabilities\\.(sms|messaging)\\.)?(ISmsService|SmsService)"
+smsMethodRx = "service"
+
+easyPackageRx = "(capabilities\\.messaging\\.external\\.easySMS\\.)?EasySmsClient";
+easyMethodRx = "sendToPlatform";
+
+locProfileClassRx = "(sdk\\.capabilities\\.location\\.generated\\.profile\\.)?LocationProfileInterface"
+locProfileMethodRx = "(isDeviceRegistered|" +
+                      "requestDeviceRegistration|" +
+                      "isDeviceRegistered|" +
+                      "unregisterDevice)";
+
+locPermClassRx = "(sdk\\.capabilities\\.location\\.generated\\.security\\.)?LocationPermissionInterface"
+locPermMethodRx = "(putDevicePolicy|" +
+                   "removeDevicePolicy|" +
+                   "getPartyPolicyRule|" +
+                   "removePartyRule|" +
+                   "requestPermission|" +
+                   "getDevicePolicy)"
+
+locClassRx = "(sdk\\.capabilities\\.location\\.generated\\.)?LocationInterface"
+locMethodRx = "(getGeoLocation|" +
+               "setGeoLocation|" +
+               "pinGeoLocation|" +
+               "clearGeoLocation|" +
+               "unpinGeoLocation)"
+
+presSignClassRx = "(platform\\.sdk\\.web\\.presence\\.signon\\.)?PresenceSignonInterface"
+presSignMethodRx = "(registerAccount|" +
+                    "signon|signoff|" +
+                    "unregisterAccount)"
+
+presRosterClassRx = "(platform\\.sdk\\.web\\.presence\\.roster\\.)?PresenceRosterInterface"
+presRosterMethodRx = "(inviteContact|" +
+                      "getPendingInvites|" +
+                      "acceptInvite|" +
+                      "getRosterEntries|" +
+                      "changeGroupAssignment)"
+
+contRosterClassRx = "(sdk\\.capabilities\\.contacts\\.roster\\.generated\\.)?ContactsRosterInterface"
+contRosterMethodRx = "(inviteContact|" +
+                      "getPendingInvites|" +
+                      "acceptInvite|" +
+                      "getRosterEntries|" +
+                      "changeGroupAssignment|" +
+                      "createGroup|" +
+                      "addBuddyToGroup|" +
+                      "getGroups|" +
+                      "removeGroup|" +
+                      "removeContact|" +
+                      "removeBuddyFromGroup|" +
+                      "declineInvite|" +
+                      "setNickname|" +
+                      "renameGroup)"
+
+presClassRx = "(platform\\.sdk\\.web\\.presence\\.)?PresenceInterface"
+presMethodRx = "(setGroupPresence|" +
+                "getDirectedPresences|" +
+                "setDirectedPresence|" +
+                "setPresence|" +
+                "getGroupPresences|" +
+                "getPresences)"
+
+appRegClassRx = "(security\\.applicationreg\\.)?ApplicationRegistrationInterface"
+appRegMethodRx = "(getApplicationsForOwner|" +
+                  "addApplication|" +
+                  "createCertificateForApplication|" +
+                  "disableApplication|" +
+                  "enableApplication|" +
+                  "deleteApplication|" +
+                  "isApplicationEnabled|" +
+                  "getApplication|" +
+                  "getApplicationsByName|" +
+                  "getApplicationsByNameLike|" +
+                  "revokeCertificateForApplication)"
+
+iamRegClassRx = "(capabilities\\.iam\\.service\\.)?InformationAboutMeInterface"
+iamRegMethodRx = "(createAttributes|" +
+                  "getAttributes|" +
+                  "setPermissions|" +
+                  "getPermissions|" +
+                  "setAttributes)"
+
+wlaRegClassRx = "(security\\.whitelabelauth\\.)?WhiteLabelAuthenticationInterface"
+wlaRegMethodRx = "(login|" +
+                  "getAllUsers|" +
+                  "getUser|" +
+                  "addUser|" +
+                  "removeUser|" +
+                  "addGroup|" +
+                  "addUsersToGroup|" +
+                  "getUsersInGroup|" +
+                  "getGroups|" +
+                  "removeUsersFromGroup|" +
+                  "removeGroup|" +
+                  "addUserAttributes|" +
+                  "updateUserAttribute|" +
+                  "removeUserAttributes|" +
+                  "changeUserPassword|" +
+                  "resetUserPassword|" +
+                  "updateGroup)"
+
+
+
+# 
+# grammar definition
+# 
+#   path1:   [capability_name][user_name][trans_id][app_uuid]
+#   path2:   [capability_name][trans_id][app_uuid][] or [capability_name][trans_id][app_uuid][user_name]
+#   path3:   [capability_name][trans_id][user_name][app_uuid]
+#   path4:   [capability_name][][app_uuid][][Release3ThirdPartyCall][]
+#   path5:   [capability_name][user_name][app_uuid][trans_id]
+#
+transition_table = {
+    :start   => { %r'#{dateRx}' => :date },
+    :date    => { %r'#{timeRx}' => :time },
+    :time    => { /INFO/ => :info },
+    :info   => {
+        %r'\[#{confClassRx}\]' =>       :path1_capability_name,
+        %r'\[#{tpcClassRx}\]' =>        :path1_capability_name,
+        %r'\[#{messPackageRx}\]' =>     :path1_capability_name,
+        %r'\[#{messOneClassRx}\]' =>    :path1_capability_name,
+        %r'\[#{messIntClassRx}\]' =>    :path1_capability_name,
+        %r'\[#{messInt2ClassRx}\]' =>   :path1_capability_name,
+        %r'\[#{messInbClassRx}\]' =>    :path1_capability_name,
+        %r'\[#{smsClassRx}\]' =>        :path1_capability_name,
+        %r'\[#{easyPackageRx}\]' =>     :path1_capability_name,
+        %r'\[#{locProfileClassRx}\]' => :path3_capability_name,
+        %r'\[#{locPermClassRx}\]' =>    :path3_capability_name,
+        %r'\[#{locClassRx}\]' =>        :path3_capability_name,
+        %r'\[#{presSignClassRx}\]' =>   :path1_capability_name,
+        %r'\[#{presRosterClassRx}\]' => :path1_capability_name,
+        %r'\[#{presClassRx}\]' =>       :path1_capability_name,
+        %r'\[#{contRosterClassRx}\]' => :path3_capability_name,
+        %r'\[#{appRegClassRx}\]' =>     :path2_capability_name,
+        %r'\[#{iamRegClassRx}\]' =>     :path3_capability_name,
+        %r'\[#{wlaRegClassRx}\]' =>     :path2_capability_name
+    },
+    
+    #  path1
+    :path1_capability_name => {
+        /\[\]/ => :path1_user_name,
+        /\[(sip:)?\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*\]/ => :path1_user_name,
+        %r'#{httpRx}' => :http
+    },
+    :path1_user_name => {
+        /\[\]/ => :path1_trans_id,
+        %r'\[#{transIdRx}\]' => :path1_trans_id,
+        %r'\[#{appUuidRx}\]' => :path4_app_uuid
+    },
+    :path1_trans_id => {
+        /\[\]/ => :path1_app_uuid,
+        %r'\[#{appUuidRx}\]' => :path1_app_uuid,
+        /\-/ => :hyphen
+    },
+    :path1_app_uuid => {
+        /\-/ => :hyphen,
+        /\[\]/ => :blank,
+        %r'\[#{releaseRx}\]' => :conf_release_tag,
+        %r'\[#{tpcReleaseRx}\]' => :tpc_release_tag
+    },
+    
+    #  path2
+    :path2_capability_name => {
+        /\[\]/ => :path2_trans_id,
+        %r'\[#{transIdRx}\]' => :path2_trans_id,
+        %r'\[#{appUuidRx}\]' => :path6_app_uuid,
+        %r'#{httpRx}' => :http
+    },
+    :path2_trans_id => {
+        /\[\]/ => :path2_app_uuid,
+        %r'\[#{appUuidRx}\]' => :path2_app_uuid
+    },
+    :path2_app_uuid => {
+        %r'\[#{userNameRx}\]' => :blank,
+        /\[[^\]]*\]/ => :blank
+    },
+    
+    #  path3
+    :path3_capability_name => {
+        /\[\]/ => :path3_trans_id,
+        %r'\[#{transIdRx}\]' => :path3_trans_id,
+        %r'\[#{appUuidRx}\]' => :path6_app_uuid,
+        %r'#{httpRx}' => :http
+    },
+    :path3_trans_id => {
+        /\[\]/ => :path3_user_name,
+        /\[(sip:)?\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*\]/ => :path3_user_name
+    },
+    :path3_user_name => {
+        /\[\]/ => :path3_app_uuid,
+        %r'\[#{appUuidRx}\]' => :path3_app_uuid
+    },
+    :path3_app_uuid => {
+        /\-/ => :hyphen
+    },
+
+    #  path4
+    :path4_app_uuid => {
+        /\[(myApp)?\]/ => :path4_trans_id
+    },
+    :path4_trans_id => {
+        /\[#{tpcReleaseRx}\]/ => :path4_release,
+        /\[Release(2|3)Conferencing\]/ => :path4_conf_release,
+        /\-/ => :hyphen
+    },
+    :path4_release => {
+        /\[\]/ => :blank
+    },
+    :path4_conf_release => {
+        %r'\[#{confIdRx}\]' => :conf_id,
+    },
+
+    :path6_app_uuid => {
+        %r'\[#{transIdRx}\]' => :path6_trans_id,
+    },
+    :path6_trans_id => {
+        /\[\]/ => :blank
+    },
+    
+    #  the rest
+    :conf_release_tag => {
+        %r'\[#{confIdRx}\]' => :conf_id,
+        /\[\]/ => :conf_id
+    },
+    :tpc_release_tag => {
+        /\[\]/ => :blank
+    },
+    :conf_id => {
+        /\[\]/ => :blank,
+        %r'\[#{partIdRx}\]' => :part_id,
+        /\-/ => :hyphen
+    },
+    :blank => {
+        /\-/ => :hyphen
+    },
+    :part_id => {
+        /\-/ => :hyphen
+    },
+    :hyphen => { %r'#{httpRx}' => :http },
+    :http => { /END/ => :end_inbound1 },
+    :end_inbound1 => {
+        /INBOUND:/ => :end_inbound2,
+        /INBOUND/ => :with_tag
+    },
+    :with_tag => { /with/ => :exception_tag  },
+    :exception_tag => { /Exception:/ => :end_inbound2 },
+    :end_inbound2 => {
+        %r'#{confClassRx}.#{confMethodRx}:' => :capability_method,
+        %r'#{confRelClassRx}.#{confMethodRx}:' => :capability_method,
+        %r'#{tpcClassRx}.#{tpcMethodRx}:' => :capability_method,
+        %r'#{tpcRelease3ClassRx}.#{tpcMethodRx}:' => :capability_method,
+        %r'#{messPackageRx}.#{messMethodRx}:' => :capability_method,
+        %r'#{messOneClassRx}.#{messOneMethodRx}:' => :capability_method,
+        %r'#{messInbClassRx}.#{messInbMethodRx}:' => :capability_method,
+        %r'#{messIntClassRx}.#{messIntMethodRx}:' => :capability_method,
+        %r'#{messInt2ClassRx}.#{messInt2MethodRx}:' => :capability_method,
+        %r'#{smsClassRx}.#{smsMethodRx}:' => :capability_method,
+        %r'#{easyPackageRx}.#{easyMethodRx}:' => :capability_method,
+        %r'#{locProfileClassRx}.#{locProfileMethodRx}:' => :capability_method,
+        %r'#{locPermClassRx}.#{locPermMethodRx}:' => :capability_method,
+        %r'#{locClassRx}.#{locMethodRx}:' => :capability_method,
+        %r'#{presSignClassRx}.#{presSignMethodRx}:' => :capability_method,
+        %r'#{presRosterClassRx}.#{presRosterMethodRx}:' => :capability_method,
+        %r'#{contRosterClassRx}.#{contRosterMethodRx}:' => :capability_method,
+        %r'#{presClassRx}.#{presMethodRx}:' => :capability_method,
+        %r'#{appRegClassRx}.#{appRegMethodRx}:' => :capability_method,
+        %r'#{iamRegClassRx}.#{iamRegMethodRx}:' => :capability_method,
+        %r'#{wlaRegClassRx}.#{wlaRegMethodRx}:' => :capability_method
+    },
+    :capability_method => {
+        /Time:/ => :time_tag
+    },
+    :time_tag => {
+        %r'#{timeToComplRx}' => :ms
+    },
+    :ms => {
+        /ms/ => :end
+    },
+    :end => {}
+}

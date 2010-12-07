@@ -1,0 +1,8 @@
+
+***** RCOV CUSTOM MODIFICATION(S) FOR ETL4R *****
+
+We have had to modify rcov in order to get cross referencing in code coverage reports. 
+This is due to a bug in rcov, which fails to identify dynamically generated classes and modules when building source code (line by line) cross references.
+The rcov team has been notified of this bug, but currently do not expose any means for external developers to submit patches, therefore we have altered the rcov gem in place.
+The modifications are to one file only (report.rb).
+The file should be manually overwritten inside the deployed gem ($GEM_HOME/rcov/lib/...)

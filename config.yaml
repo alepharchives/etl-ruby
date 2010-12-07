@@ -1,0 +1,49 @@
+
+#properties file for deployment specific values such as database connection strings, etc
+
+database:
+    user: mistest
+    password: password
+    host: localhost
+    port: 5432
+    catalog: CAT_STAGING
+    schema: public
+
+#todo: remove this after acceptance.
+chit_database:
+    user: mistest
+    password: password
+    host: localhost
+    port: 5432
+    catalog: chit_test
+    schema: public
+
+sql_unit_test_database:
+    user: mistest
+    password: password
+    host: localhost
+    port: 5432
+    catalog: TEST
+    schema: public
+
+log_file_subjects:
+    [:session, :capability_usage, :messaging, :callflow_script, :callflow_element, :application_registration]
+
+data_directory: /test/data
+
+#todo: don't make this relative!
+landing_point: ~/test/integration/data
+static_data_dir: ~/sql/lib/data
+
+dump_dir: ~/test/integration/data/dump
+
+#todo: consider whether this is a good location for the path to our grammars?
+parser_grammar_definitions_dir: ~/grammar
+transformers_definitions_dir: ~/transformers
+
+#also consider whether this file (e.g. your config.yaml) should be in the *deployment* directory as well!?
+
+#todo: why is this in our deployment configuration???!
+code_coverage_threshold: 92
+
+path_to_report_config: ~/test/integration/data/reports/reports

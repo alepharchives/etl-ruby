@@ -1,0 +1,35 @@
+transition_table = {
+    :start => { /\d{4}-\d{2}-\d{2}/ => :date },
+    :date  => { /\d{2}:\d{2}:\d{2},\d{3}/ => :time },
+    :time  => { /INFO/ => :info },
+    :info  => { 
+                /\[ApplicationRegistrationInterface\]/ => :servicename
+              },
+    :servicename  => {
+                   /\[\d+((-\d+){3})?\]/ => :txn_id,
+                   /\[ID:JBM-\d{10}\]/ => :txn_id
+                   },
+    :txn_id    => {
+                    /\[sip:location2sandbox@sb-domain.com\]/ => :app_uuid,
+                    /\[(urn:uuid:)?.{8}-.{4}-.{4}-.{4}-.{12}\]/ => :app_uuid,
+                    /\[\]/ => :app_uuid,
+                    /\[sip:location@db-domain.com\]/ => :app_uuid,
+                    /\[\w+\]/ => :app_uuid
+                  },
+    :app_uuid => { 
+                    /\[\]/ => :user_id,
+                    /\[(\w|\.|\-)+@(\w|\-)+\.\w+\]/ => :user_id,
+                 },
+    :user_id  => { /\-/ => :hyphen },
+    :hyphen    => { /http-\d.\d.\d.\d-\d+-\d:/ => :http },
+    :http  => { /START/ => :startstring },
+    :startstring  => { /INBOUND:/ => :inbound },
+    :inbound => 
+                { 
+                    /ApplicationRegistrationInterface.enableApplication\(.+/ => :end,
+                    /ApplicationRegistrationInterface.disableApplication\(\[(.+)?\, (.+)?\]\)/ => :end,
+                    /ApplicationRegistrationInterface.deleteApplication\(\[(.+)?\]\)/ => :end,
+                    /ApplicationRegistrationInterface.createCertificateForApplication\(\[(.+)?, ([\w,\d,\s,\+,\/,=,%,-]*)(\]\))?/ => :end
+                },
+    :end   => {}
+}

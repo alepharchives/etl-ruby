@@ -1,0 +1,50 @@
+
+transitions = {
+    :start => { /\d{4}-\d{2}-\d{2}/ => :date },
+    :date  => { /\d{2}:\d{2}:\d{2},\d{3}/ => :time },
+    :time  => { /INFO/ => :info },
+    :info  => {
+        /\[([\w\._]*)?SessionThirdPartyCallInterface\]/ => :capability_name1
+    },
+    :capability_name1 => {
+        /\[(sip:)?\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*\]/ => :user,
+        /\[\]/ => :user,
+        /\-/ => :pre_http,
+        /http\-0\.0\.0\.0\-\d{5}\-\d{1,2}:/ => :http
+    },
+    :user  => {
+        /\[fitnesse\.transaction\.id\.def\]/ => :txn_id,
+        /\[\d+((-\d+){3})?\]/ => :txn_id,
+        /\[\]/ => :txn_id,
+        /\[(urn:uuid:)?\w{8}-\w{4}-\w{4}-\w{4}-\w{12}\]/ => :early_app_id
+    },
+    :early_app_id => {
+        /\[fitnesse\.transaction\.id\.def\]/ => :txn_id2,
+        /\[\d+((-\d+){3})?\]/ => :txn_id2,
+        /\[\]/ => :txn_id2
+    },
+    :txn_id => {
+        /\[(urn:uuid:)?\w{8}-\w{4}-\w{4}-\w{4}-\w{12}\]/ => :app_id,
+        /\[(App|Bad Testapp|FITNESSE-CLIENT|sip:location2sandbox@sb-domain.com|http:\/\/\/2006\/09\/Location)\]/ => :app_id,
+        /\[\]/ => :app_id
+    },
+    :txn_id2 => {
+        /\-/ => :pre_http,
+        /http\-0\.0\.0\.0\-\d{5}\-\d{1,2}:/ => :http
+    },
+    :app_id => {
+        /\-/ => :pre_http  ,
+        /http\-0\.0\.0\.0\-\d{5}\-\d{1,2}:/ => :http
+    },
+    :pre_http => { /http\-0\.0\.0\.0\-\d{5}\-\d{1,2}:/ => :http },
+    :http     => { /START/ => :start_inbound1 },
+    :start_inbound1 => { /INBOUND:/ => :start_inbound2 },
+    :start_inbound2 => {
+        /([\w\._]*)?SessionThirdPartyCallInterface.makeCall\(\[.*\]\)/ => :end
+    },
+    # NOTE: Removed these states whilst refactoring the parser to accept method_name as a complete token, up until the ending square bracket.
+    # This was done to compensate for invalid caller and/or callee numbers (containing whitespace and other tokens that fox the scanner into splitting incorrectly).
+    #:method_name    => { /.*\,/ => :callee },
+    #:callee         => { /(-)?\d{1,2}\]\)/ => :end},
+    :end            => { }
+}
